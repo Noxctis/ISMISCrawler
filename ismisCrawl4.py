@@ -170,9 +170,9 @@ def fetch_grades():
 def main():
     """Main function to control the flow of the program."""
     clear()
-
-    print("Welcome to blurridge's ISMIS Crawler!\n")
-    print("Delivering your grades without the hassle.")
+    
+    print("Welcome to ISMIS Crawler!\n")
+    print("Delivering your information without the hassle.")
     time.sleep(1)
     print("Loading...")
 
@@ -182,14 +182,22 @@ def main():
     username_input, password_input = load_credentials()
 
     # Login process
+    login_status = False
     while not login_status:
-        clear()
-        login_status = login_attempt(username_input, password_input)
-        if login_status:
-            login_status = check_valid_login()
+        #clear()
+        login_attempt(username_input, password_input)
+        login_status = check_valid_login()
 
-    print("Entering homepage...")
+    print("Logged in successfully.")
+    
+    # Continuously monitor post-login page for crashes
+    while check_site_crash_after_login():
+        browser.refresh()
+        time.sleep(5)
 
+    # Demonstrate button interactions
+    print("Navigating to Grades...")
+    time.sleep(10)
     fetch_grades()
     
     print("DONE!")
