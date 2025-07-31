@@ -137,6 +137,13 @@ def fetch_grades():
     """Fetches and prints the grade data."""
     try:
         browser.get("https://ismis.usc.edu.ph/ViewGrades")
+        
+        # Ensure the page is loaded
+        while check_site_crash_after_login():
+            browser.refresh()
+            time.sleep(5)
+        # Wait for the body to load
+        
         body = wait_for_element(By.TAG_NAME, "body", timeout=15)
         #body = wait_for_element(By.CLASS_NAME, "portlet-title", timeout=5) #Trying to make it that it loads the table.
         tables = body.find_elements(By.CLASS_NAME, "table")
@@ -183,14 +190,11 @@ def main():
 
     print("Entering homepage...")
 
-    # Handle homepage crashes
-    # Ensure the page is loaded
-    while check_site_crash_after_login():
-        browser.refresh()
-        time.sleep(5)
-
     fetch_grades()
+    
     print("DONE!")
+    # Keep the browser open after navigation
+    input("Press Enter to exit and close the browser.")
     browser.quit()
 
 if __name__ == "__main__":
