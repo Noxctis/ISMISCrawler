@@ -148,7 +148,7 @@ def fetch_grades():
         #body = wait_for_element(By.CLASS_NAME, "portlet-title", timeout=5) #Trying to make it that it loads the table.
         tables = body.find_elements(By.CLASS_NAME, "table")
 
-        print("{:20s} {:60s} {:7s} {:4s} {:4s}".format("Course Code", "Course Name", "Units", "MG", "FG"))
+        print("{:25s} {:80s} {:7s} {:4s} {:4s}".format("Course Code", "Course Name", "Units", "MG", "FG"))
 
         for table_index in range(len(tables)):
             course_code = tables[table_index].find_elements(By.CLASS_NAME, "col-lg-3")
@@ -158,7 +158,7 @@ def fetch_grades():
 
             grade_index = 0
             for index in range(len(course_code)):
-                print("{:20s} {:60s} {:7s} {:4s} {:4s}".format(
+                print("{:25s} {:80s} {:7s} {:4s} {:4s}".format(
                     course_code[index].text, course_name[index].text, unit_num[index].text,
                     grade_value[grade_index].text, grade_value[grade_index + 1].text
                 ))
